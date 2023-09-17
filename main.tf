@@ -22,8 +22,8 @@ data "google_container_engine_versions" "gke_version" {
 }
 resource "google_compute_instance" "web" {
   name         = "webserver"
-  machine_type = "f1-micro"
-
+  machine_type = "e2-micro"
+}
   tags = ["http-server"]
 
   boot_disk {
