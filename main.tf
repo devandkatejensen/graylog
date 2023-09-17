@@ -60,6 +60,35 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+resource "google_compute_instance" "web" {
+  name         = "webserver"
+  machine_type = "e2-micro"
+
+  tags = ["http-server"]
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  metadata_startup_script = file("./apache2.sh")
+
+  scheduling {
+    preemptible       = true
+    automatic_restart = false
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+
+    }
+
+  }
+
+
+
   }
 }
 
