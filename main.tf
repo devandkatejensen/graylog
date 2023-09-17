@@ -9,11 +9,9 @@ variable "gke_password" {
 }
 
 variable "gke_num_nodes" {
-  default     = 1
+  default     = 2
   description = "number of gke nodes"
 }
-
-
 
 # GKE cluster
 data "google_container_engine_versions" "gke_version" {
@@ -22,9 +20,9 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = Hello Graylog my name is Devon Jensen
+  name     = "Hello Graylog my name is Devon Jensen"
   location = var.region
-  
+
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -43,7 +41,7 @@ resource "google_container_node_pool" "primary_nodes" {
   
   version = data.google_container_engine_versions.gke_version.release_channel_latest_version["STABLE"]
   node_count = var.gke_num_nodes
-}
+
   node_config {
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
@@ -55,9 +53,10 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     # preemptible  = true
-    machine_type = "e2-micro"
-    tags         = ["graylog-node", "${var.project_id}-gke"]
+    machine_type = "n1-standard-1"
+    tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
     }
   }
+}
