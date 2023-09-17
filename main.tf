@@ -20,7 +20,7 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "Hello Graylog my name is Devon Jensen"
+  name     = "hello-graylog-my-name-is-devon-jensen"
   location = var.region
 
   # We can't create a cluster with no node pool defined, but we want to only use
