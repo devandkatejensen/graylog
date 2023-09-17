@@ -60,6 +60,7 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+}
 resource "google_compute_instance" "web" {
   name         = "webserver"
   machine_type = "e2-micro"
